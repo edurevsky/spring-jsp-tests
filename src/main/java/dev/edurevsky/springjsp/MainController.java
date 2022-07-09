@@ -1,19 +1,17 @@
 package dev.edurevsky.springjsp;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping("/")
 public class MainController {
+
+    private List<Animal> animals = new ArrayList<>();
 
     @GetMapping
     public ModelAndView index() {
@@ -50,5 +48,23 @@ public class MainController {
         }
         mv.addObject("numbers", numbers);
         return mv;
+    }
+
+    @GetMapping("/animals")
+    public ModelAndView animals() {
+        ModelAndView mv = new ModelAndView("animals");
+        mv.addObject("animals", animals);
+        return mv;
+    }
+
+    @GetMapping("/newAnimal")
+    public ModelAndView formNewAnimal() {
+        return new ModelAndView("formAnimal");
+    }
+
+    @PostMapping("/newAnimal")
+    public ModelAndView newAnimal(@ModelAttribute Animal animal) {
+        animals.add(animal);
+        return new ModelAndView("redirect:/animals");
     }
 }
