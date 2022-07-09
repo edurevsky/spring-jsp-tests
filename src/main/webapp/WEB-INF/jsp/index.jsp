@@ -5,11 +5,6 @@
 </head>
 <body>
 <h1>This is the index page</h1>
-<%
-    int a = 1;
-    int b = 2;
-    int sum = a + b;
-%>
 <p>The sum of ${a} and ${b} is ${sum}</p>
 </body>
 </html>
