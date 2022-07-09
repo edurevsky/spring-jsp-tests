@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -36,6 +38,17 @@ public class MainController {
         mv.addObject("a", a);
         mv.addObject("b", b);
         mv.addObject("sum", a + b);
+        return mv;
+    }
+
+    @GetMapping("/forEach")
+    public ModelAndView forEach() {
+        ModelAndView mv = new ModelAndView("forEach");
+        List<Integer> numbers = new ArrayList<>();
+        for (int i = 0; i <= 50; i += 2) {
+            numbers.add(i);
+        }
+        mv.addObject("numbers", numbers);
         return mv;
     }
 }
