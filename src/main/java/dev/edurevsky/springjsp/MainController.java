@@ -1,6 +1,7 @@
 package dev.edurevsky.springjsp;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -59,11 +60,17 @@ public class MainController {
 
     @GetMapping("/newAnimal")
     public ModelAndView formNewAnimal() {
-        return new ModelAndView("formAnimal");
+        ModelAndView mv = new ModelAndView("formAnimal");
+        mv.addObject("animalRequest", new AnimalRequest());
+        return mv;
     }
 
     @PostMapping("/newAnimal")
-    public ModelAndView newAnimal(@ModelAttribute Animal animal) {
+    public ModelAndView newAnimal(@ModelAttribute("animalRequest") AnimalRequest animalRequest, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return formNewAnimal();
+        }
+        Animal animal = new Animal(animalRequest.getName());
         animals.add(animal);
         return new ModelAndView("redirect:/animals");
     }
